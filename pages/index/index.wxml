@@ -1,0 +1,126 @@
+<view class="container">
+  <navigation-bar title="{{isAdmin ? '管理仪表盘' : '阳光洗车'}}" back="{{false}}"></navigation-bar>
+
+  <!-- ========== 管理员仪表盘 ========== -->
+  <block wx:if="{{isAdmin}}">
+    <view class="a-header">
+      <text class="a-greeting">管理员，你好</text>
+      <text class="a-date">今日数据概览</text>
+    </view>
+
+    <view class="a-stats-grid">
+      <view class="a-stat-card">
+        <text class="a-stat-num">{{dashboard.todayOrders}}</text>
+        <text class="a-stat-label">今日订单</text>
+      </view>
+      <view class="a-stat-card">
+        <text class="a-stat-num">¥{{dashboard.todayRevenue}}</text>
+        <text class="a-stat-label">今日营收</text>
+      </view>
+      <view class="a-stat-card">
+        <text class="a-stat-num">{{dashboard.totalUsers}}</text>
+        <text class="a-stat-label">总用户</text>
+      </view>
+      <view class="a-stat-card">
+        <text class="a-stat-num">{{dashboard.totalServices}}</text>
+        <text class="a-stat-label">在售服务</text>
+      </view>
+    </view>
+
+    <view class="a-tabs flex">
+      <text
+        wx:for="{{adminTabs}}" wx:key="key"
+        class="a-tab {{adminActiveTab === item.key ? 'active' : ''}}"
+        bindtap="switchAdminTab" data-key="{{item.key}}"
+      >{{item.label}}</text>
+    </view>
+
+    <view class="a-order-list px-24">
+      <view class="a-order" wx:for="{{recentOrders}}" wx:key="id">
+        <view class="flex-between">
+          <text class="a-o-no">{{item.order_no}}</text>
+          <text class="a-o-status" style="color:{{util.getOrderStatusColor(item.status)}}">{{util.getOrderStatusText(item.status)}}</text>
+        </view>
+        <view class="flex-between mt-12">
+          <text class="a-o-info">{{item.service_name}} · {{item.store_name}}</text>
+          <text class="a-o-amount">¥{{item.amount}}</text>
+        </view>
+        <text class="a-o-user">{{item.nickname}} · {{item.appoint_date}} {{item.appoint_time}}</text>
+
+        <view class="a-actions" wx:if="{{item.status === 'pending'}}">
+          <button class="a-btn-ok" data-id="{{item.id}}" data-status="confirmed" bindtap="updateStatus">确认接单</button>
+          <button class="a-btn-no" data-id="{{item.id}}" data-status="cancelled" bindtap="updateStatus">取消</button>
+        </view>
+        <view class="a-actions" wx:elif="{{item.status === 'confirmed'}}">
+          <button class="a-btn-ok" data-id="{{item.id}}" data-status="in_progress" bindtap="updateStatus">开始服务</button>
+        </view>
+        <view class="a-actions" wx:elif="{{item.status === 'in_progress'}}">
+          <button class="a-btn-ok" data-id="{{item.id}}" data-status="completed" bindtap="updateStatus">完成服务</button>
+        </view>
+      </view>
+      <view wx:if="{{recentOrders.length === 0}}" class="empty-hint">暂无订单</view>
+    </view>
+  </block>
+
+  <!-- ========== 普通用户首页 ========== -->
+  <block wx:else>
+    <swiper class="banner" autoplay interval="3000" circular>
+      <swiper-item wx:for="{{banners}}" wx:key="id">
+        <view class="banner-item" style="background:{{item.fallbackColor}}">
+          <image wx:if="{{item.image_url}}" src="{{item.image_url}}" mode="aspectFill" class="banner-img" />
+          <text wx:else class="banner-text">{{item.title}}</text>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <view class="section">
+      <view class="section-title flex-between">
+        <text>服务项目</text>
+        <text class="link" bindtap="goToServices">全部 ></text>
+      </view>
+      <scroll-view scroll-x class="h-scroll">
+        <view class="service-item" wx:for="{{services}}" wx:key="id" bindtap="goToServiceDetail" data-id="{{item.id}}">
+          <view class="service-icon">{{item.icon}}</view>
+          <text class="service-name">{{item.name}}</text>
+          <text class="price">¥{{item.price}}</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="section" wx:if="{{coupons.length}}">
+      <view class="section-title"><text>优惠活动</text></view>
+      <scroll-view scroll-x class="h-scroll">
+        <view class="coupon-card" wx:for="{{coupons}}" wx:key="id">
+          <view class="coupon-left">
+            <text class="coupon-val">{{item.type === 'percent' ? item.discount_value + '%' : '¥' + item.discount_value}}</text>
+            <text class="coupon-name">{{item.name}}</text>
+          </view>
+          <view class="coupon-right" bindtap="receiveCoupon" data-id="{{item.id}}">
+            <text>立即领取</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="section">
+      <view class="section-title flex-between">
+        <text>附近门店</text>
+        <text class="link" bindtap="goToStores">全部 ></text>
+      </view>
+      <view class="store-item card" wx:for="{{stores}}" wx:key="id" bindtap="goToStoreDetail" data-id="{{item.id}}">
+        <view class="flex">
+          <view class="store-icon">🏪</view>
+          <view class="flex-1">
+            <text class="store-name">{{item.name}}</text>
+            <text class="gray-text">{{item.address}}</text>
+            <text class="gray-text">营业 {{item.open_time}}-{{item.close_time}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="quick-book card flex-center" bindtap="goToBooking">
+      <text class="quick-book-text">立即预约洗车</text>
+    </view>
+  </block>
+</view>

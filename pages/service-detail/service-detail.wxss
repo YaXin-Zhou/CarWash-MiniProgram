@@ -1,0 +1,28 @@
+.detail-header {
+  height: 280rpx; background: linear-gradient(135deg, #E6F4FF, #BAE0FF);
+}
+.detail-icon { font-size: 100rpx; }
+
+.d-name { font-size: 36rpx; font-weight: 700; color: var(--text); }
+.d-price-row { text-align: right; }
+.d-price { font-size: 44rpx; color: var(--danger); font-weight: 700; }
+.d-original { font-size: 26rpx; color: var(--text-muted); text-decoration: line-through; display: block; }
+
+.d-info { gap: 40rpx; }
+.info-item { display: flex; flex-direction: column; }
+.info-label { font-size: 22rpx; color: var(--text-muted); }
+.info-val { font-size: 28rpx; color: var(--text); font-weight: 500; margin-top: 4rpx; }
+
+.card-title { font-size: 30rpx; font-weight: 600; color: var(--text); margin-bottom: 12rpx; display: block; }
+.d-desc { font-size: 26rpx; color: var(--text-secondary); line-height: 1.6; }
+
+.bottom-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--white); padding: 20rpx 32rpx;
+  box-shadow: 0 -2rpx 12rpx rgba(0,0,0,0.05);
+}
+.total-price { font-size: 36rpx; color: var(--danger); font-weight: 700; }
+.book-btn {
+  background: var(--primary); color: #fff; border-radius: 44rpx;
+  font-size: 30rpx; padding: 18rpx 52rpx; border: none;
+}

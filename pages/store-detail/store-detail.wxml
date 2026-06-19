@@ -1,0 +1,35 @@
+<view class="container" wx:if="{{store}}">
+  <navigation-bar title="门店详情"></navigation-bar>
+
+  <view class="store-header flex-center">
+    <text class="store-icon">🏪</text>
+  </view>
+
+  <view class="card">
+    <text class="store-name">{{store.name}}</text>
+    <view class="flex mt-24" bindtap="openLocation">
+      <text class="addr-icon">📍</text>
+      <text class="addr-text flex-1">{{store.address}}</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="info-row flex-between">
+      <text class="info-label">营业时间</text>
+      <text class="info-val">{{store.open_time}} - {{store.close_time}}</text>
+    </view>
+    <view class="info-row flex-between mt-24">
+      <text class="info-label">联系电话</text>
+      <text class="info-val link" bindtap="callPhone">{{store.phone}}</text>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{store.description}}">
+    <text class="card-title">门店介绍</text>
+    <text class="desc-text">{{store.description}}</text>
+  </view>
+
+  <view class="bottom-bar flex-center">
+    <button class="book-btn" bindtap="goToBooking">预约该门店</button>
+  </view>
+</view>

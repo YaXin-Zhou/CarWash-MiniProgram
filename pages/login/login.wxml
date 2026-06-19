@@ -1,0 +1,21 @@
+<view class="login-container">
+  <view class="login-card">
+    <view class="login-logo">{{isAdminLogin ? '🛡️' : '🚗'}}</view>
+    <text class="login-title">阳光洗车</text>
+    <text class="login-desc">{{isAdminLogin ? '管理员登录' : '专业汽车美容服务平台'}}</text>
+
+    <!-- 管理员登录表单 -->
+    <block wx:if="{{isAdminLogin}}">
+      <input class="login-input" placeholder="账号" value="{{username}}" bindinput="onUsernameInput" />
+      <input class="login-input" type="password" placeholder="密码" value="{{password}}" bindinput="onPasswordInput" bindconfirm="handleAdminLogin" />
+      <button class="login-btn" bindtap="handleAdminLogin" loading="{{loading}}">管理员登录</button>
+    </block>
+
+    <!-- 普通用户登录 -->
+    <button class="login-btn" wx:else bindtap="handleLogin" loading="{{loading}}">微信一键登录</button>
+
+    <text class="login-tip" bindtap="switchMode">
+      {{isAdminLogin ? '切换用户登录' : '管理员登录'}}
+    </text>
+  </view>
+</view>

@@ -1,0 +1,37 @@
+/* ---- Admin: Order Management ---- */
+.search-bar { padding: 16rpx 24rpx; }
+.s-input {
+  background: #fff; border-radius: 40rpx; padding: 16rpx 28rpx;
+  font-size: 26rpx; border: 1rpx solid var(--border); width: 100%; box-sizing: border-box;
+}
+.status-scroll { background: #fff; white-space: nowrap; padding: 12rpx 24rpx; border-bottom: 1rpx solid var(--border); }
+.s-tab { display: inline-block; font-size: 26rpx; color: var(--text-secondary); padding: 8rpx 20rpx; }
+.s-tab.active { color: var(--primary); font-weight: 600; }
+
+.order-list { padding: 16rpx 24rpx 40rpx; }
+.o-card { background: #fff; border-radius: var(--radius); padding: 24rpx; margin-bottom: 16rpx; }
+.o-no { font-size: 22rpx; color: var(--text-muted); display: block; }
+.o-user { font-size: 24rpx; color: var(--text-secondary); margin-left: 16rpx; }
+.o-status { font-size: 26rpx; font-weight: 600; }
+.o-info { font-size: 28rpx; color: var(--text); }
+.o-amt { font-size: 30rpx; color: var(--danger); font-weight: 600; }
+.o-time { font-size: 22rpx; color: var(--text-muted); display: block; margin-top: 8rpx; }
+
+.o-actions { display: flex; gap: 16rpx; margin-top: 16rpx; }
+.o-actions button { flex: 1; border-radius: 32rpx; font-size: 26rpx; padding: 14rpx 0; border: none; }
+.btn-ok { background: var(--primary); color: #fff; }
+.btn-cxl { background: #F5F5F5; color: var(--text-secondary); }
+.empty-hint { text-align: center; padding: 80rpx 0; font-size: 26rpx; color: var(--text-muted); }
+
+/* ---- User: Services ---- */
+.cat-tabs { background: var(--white); white-space: nowrap; padding: 20rpx 24rpx; border-bottom: 1rpx solid var(--border); }
+.cat-tab { display: inline-block; font-size: 28rpx; color: var(--text-secondary); padding: 12rpx 28rpx; margin-right: 12rpx; border-radius: 32rpx; background: #F5F5F5; }
+.cat-tab.active { background: var(--primary); color: #fff; }
+.service-list { padding-top: 16rpx; }
+.service-card { margin: 16rpx 0; }
+.s-icon { font-size: 56rpx; margin-right: 20rpx; width: 80rpx; text-align: center; }
+.s-name { font-size: 30rpx; font-weight: 600; color: var(--text); }
+.s-price { font-size: 34rpx; color: var(--danger); font-weight: 700; }
+.s-desc { font-size: 24rpx; color: var(--text-muted); display: block; margin-top: 8rpx; }
+.s-duration { font-size: 22rpx; color: var(--primary); }
+.s-original { font-size: 24rpx; color: var(--text-muted); text-decoration: line-through; }

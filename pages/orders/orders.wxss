@@ -1,0 +1,44 @@
+/* ---- Admin: Stats ---- */
+.a-header { padding: 28rpx 32rpx 8rpx; }
+.a-title { font-size: 34rpx; font-weight: 700; color: var(--text); }
+
+.stat-cards { padding: 0 24rpx; }
+.stat-row { gap: 12rpx; margin-bottom: 12rpx; }
+.stat-half {
+  flex: 1; background: #fff; border-radius: var(--radius); padding: 28rpx;
+  text-align: center; box-shadow: 0 1rpx 4rpx rgba(0,0,0,0.03);
+}
+.sh-num { font-size: 36rpx; font-weight: 700; color: var(--primary); display: block; }
+.sh-label { font-size: 22rpx; color: var(--text-muted); display: block; margin-top: 6rpx; }
+
+.card { background: #fff; border-radius: var(--radius); padding: 24rpx; margin-top: 16rpx; }
+.mx-24 { margin-left: 24rpx; margin-right: 24rpx; }
+.card-title { font-size: 28rpx; font-weight: 600; color: var(--text); margin-bottom: 16rpx; display: block; }
+
+.chart-bar { }
+.bar-row { margin-bottom: 14rpx; align-items: center; }
+.bar-label { font-size: 24rpx; color: var(--text-secondary); width: 100rpx; flex-shrink: 0; }
+.bar-track { height: 20rpx; background: #F0F0F0; border-radius: 10rpx; margin: 0 16rpx; overflow: hidden; }
+.bar-fill { height: 20rpx; border-radius: 10rpx; min-width: 8rpx; transition: width 0.5s; }
+.bar-num { font-size: 24rpx; color: var(--text); width: 40rpx; text-align: right; }
+
+.revenue-list { }
+.r-row { padding: 16rpx 0; border-bottom: 1rpx solid var(--border); }
+.r-date { font-size: 26rpx; color: var(--text-secondary); }
+.r-amount { font-size: 28rpx; color: var(--primary); font-weight: 600; }
+
+/* ---- User: Orders ---- */
+.tab-scroll { background: var(--white); white-space: nowrap; padding: 16rpx 24rpx; border-bottom: 1rpx solid var(--border); }
+.tab-item { display: inline-block; font-size: 26rpx; color: var(--text-secondary); padding: 10rpx 24rpx; margin-right: 8rpx; }
+.tab-item.active { color: var(--primary); font-weight: 600; }
+.empty-state { text-align: center; padding: 120rpx 0; }
+.empty-icon { font-size: 80rpx; display: block; }
+.empty-text { font-size: 28rpx; color: var(--text-muted); display: block; margin-top: 16rpx; }
+.order-list { padding-top: 16rpx; }
+.order-card { margin: 16rpx 0; }
+.order-no { font-size: 24rpx; color: var(--text-muted); }
+.order-status { font-size: 26rpx; font-weight: 600; }
+.order-service { font-size: 30rpx; font-weight: 600; color: var(--text); }
+.order-store { font-size: 26rpx; color: var(--text-secondary); }
+.order-amount { font-size: 32rpx; color: var(--danger); font-weight: 600; }
+.order-time { font-size: 24rpx; color: var(--text-muted); display: block; margin-top: 12rpx; }

@@ -1,0 +1,13 @@
+.empty-state { text-align: center; padding: 120rpx 0; }
+.empty-icon { font-size: 80rpx; display: block; }
+.empty-text { font-size: 28rpx; color: var(--text-muted); display: block; margin-top: 16rpx; }
+
+.vehicle-card { margin: 16rpx 0; }
+.plate-no {
+  font-size: 32rpx; font-weight: 700; color: var(--text);
+  background: #F0F5FF; border: 2rpx solid var(--primary);
+  border-radius: 8rpx; padding: 4rpx 16rpx; display: inline-block;
+}
+.car-info { font-size: 26rpx; color: var(--text-secondary); display: block; margin-top: 12rpx; }
+.action-btn { font-size: 26rpx; color: var(--primary); padding: 8rpx 16rpx; }
+.action-btn.delete { color: var(--danger); }

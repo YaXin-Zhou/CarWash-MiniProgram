@@ -1,0 +1,26 @@
+.store-header {
+  height: 240rpx; background: linear-gradient(135deg, #E6F4FF, #BAE0FF);
+}
+.store-icon { font-size: 100rpx; }
+
+.store-name { font-size: 36rpx; font-weight: 700; color: var(--text); }
+.addr-icon { font-size: 28rpx; margin-right: 8rpx; }
+.addr-text { font-size: 26rpx; color: var(--text-secondary); }
+
+.info-row { padding: 4rpx 0; }
+.info-label { font-size: 28rpx; color: var(--text-secondary); }
+.info-val { font-size: 28rpx; color: var(--text); }
+.link { color: var(--primary); }
+
+.card-title { font-size: 30rpx; font-weight: 600; color: var(--text); margin-bottom: 12rpx; display: block; }
+.desc-text { font-size: 26rpx; color: var(--text-secondary); line-height: 1.6; }
+
+.bottom-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--white); padding: 20rpx 32rpx;
+  box-shadow: 0 -2rpx 12rpx rgba(0,0,0,0.05);
+}
+.book-btn {
+  background: var(--primary); color: #fff; border-radius: 44rpx;
+  font-size: 32rpx; padding: 20rpx 0; border: none; width: 100%;
+}

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阳光洗车 - 管理后台</title>
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+<div id="app">
+  <!-- Login Screen -->
+  <div v-if="!token" class="login-page">
+    <div class="login-box">
+      <h1>🚗 阳光洗车</h1>
+      <p>管理后台</p>
+      <input v-model="loginForm.username" placeholder="用户名" class="input" @keyup.enter="login">
+      <input v-model="loginForm.password" type="password" placeholder="密码" class="input" @keyup.enter="login">
+      <button class="btn btn-primary" style="width:100%" @click="login">登录</button>
+      <p class="tip">默认账号: admin / admin</p>
+    </div>
+  </div>
+
+  <!-- Main Admin -->
+  <div v-else class="admin-layout">
+    <aside class="sidebar">
+      <div class="sidebar-title">🚗 阳光洗车</div>
+      <nav>
+        <a v-for="m in menus" :key="m.key" :class="['nav-item', { active: activeMenu === m.key }]" @click="activeMenu = m.key">{{ m.label }}</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a class="nav-item" @click="logout">退出登录</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <!-- Dashboard -->
+      <div v-if="activeMenu === 'dashboard'">
+        <h2>仪表盘</h2>
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-num">{{dashboard.todayOrders}}</div><div class="stat-label">今日订单</div></div>
+          <div class="stat-card"><div class="stat-num">¥{{dashboard.todayRevenue}}</div><div class="stat-label">今日营收</div></div>
+          <div class="stat-card"><div class="stat-num">{{dashboard.totalUsers}}</div><div class="stat-label">用户总数</div></div>
+          <div class="stat-card"><div class="stat-num">{{dashboard.totalServices}}</div><div class="stat-label">在售服务</div></div>
+        </div>
+        <h3 style="margin-top:32px">最近订单</h3>
+        <table class="table" v-if="dashboard.recentOrders">
+          <thead><tr><th>订单号</th><th>用户</th><th>服务</th><th>金额</th><th>状态</th><th>时间</th></tr></thead>
+          <tbody>
+            <tr v-for="o in dashboard.recentOrders" :key="o.id">
+              <td>{{o.order_no}}</td>
+              <td>{{o.nickname}}</td>
+              <td>{{o.service_name}}</td>
+              <td>¥{{o.amount}}</td>
+              <td><span :class="'tag tag-'+o.status">{{statusMap[o.status]}}</span></td>
+              <td>{{o.created_at}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Orders -->
+      <div v-if="activeMenu === 'orders'">
+        <h2>订单管理</h2>
+        <div class="toolbar">
+          <select v-model="orderFilter.status" @change="loadOrders" class="input" style="width:160px">
+            <option value="all">全部状态</option>
+            <option value="pending">待确认</option>
+            <option value="confirmed">已确认</option>
+            <option value="in_progress">进行中</option>
+            <option value="completed">已完成</option>
+            <option value="cancelled">已取消</option>
+          </select>
+          <input v-model="orderFilter.keyword" placeholder="搜索订单号/用户" class="input" style="width:240px" @keyup.enter="loadOrders">
+        </div>
+        <table class="table">
+          <thead><tr><th>订单号</th><th>用户</th><th>服务</th><th>门店</th><th>金额</th><th>预约时间</th><th>状态</th><th>操作</th></tr></thead>
+          <tbody>
+            <tr v-for="o in orders.list" :key="o.id">
+              <td>{{o.order_no}}</td>
+              <td>{{o.nickname}}</td>
+              <td>{{o.service_name}}</td>
+              <td>{{o.store_name}}</td>
+              <td>¥{{o.amount}}</td>
+              <td>{{o.appoint_date}} {{o.appoint_time}}</td>
+              <td><span :class="'tag tag-'+o.status">{{statusMap[o.status]}}</span></td>
+              <td>
+                <select @change="updateOrderStatus(o.id, $event.target.value)" class="input" style="width:auto;padding:4px 8px">
+                  <option value="">变更状态</option>
+                  <option value="confirmed">确认</option>
+                  <option value="in_progress">进行中</option>
+                  <option value="completed">完成</option>
+                  <option value="cancelled">取消</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Services -->
+      <div v-if="activeMenu === 'services'">
+        <h2>服务管理</h2>
+        <button class="btn btn-primary" @click="openServiceForm()">+ 新增服务</button>
+        <table class="table" style="margin-top:16px">
+          <thead><tr><th>ID</th><th>图标</th><th>名称</th><th>分类</th><th>价格</th><th>原价</th><th>时长(分)</th><th>状态</th><th>操作</th></tr></thead>
+          <tbody>
+            <tr v-for="s in services" :key="s.id">
+              <td>{{s.id}}</td>
+              <td>{{s.icon}}</td>
+              <td>{{s.name}}</td>
+              <td>{{s.category}}</td>
+              <td>¥{{s.price}}</td>
+              <td>¥{{s.original_price}}</td>
+              <td>{{s.duration}}</td>
+              <td><span :class="'tag '+(s.status===1?'tag-confirmed':'tag-cancelled')">{{s.status===1?'上架':'下架'}}</span></td>
+              <td>
+                <button class="btn btn-sm" @click="openServiceForm(s)">编辑</button>
+                <button class="btn btn-sm btn-danger" @click="deleteService(s.id)">删除</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Stores -->
+      <div v-if="activeMenu === 'stores'">
+        <h2>门店管理</h2>
+        <button class="btn btn-primary" @click="openStoreForm()">+ 新增门店</button>
+        <table class="table" style="margin-top:16px">
+          <thead><tr><th>ID</th><th>名称</th><th>地址</th><th>电话</th><th>营业时间</th><th>状态</th><th>操作</th></tr></thead>
+          <tbody>
+            <tr v-for="s in stores" :key="s.id">
+              <td>{{s.id}}</td>
+              <td>{{s.name}}</td>
+              <td>{{s.address}}</td>
+              <td>{{s.phone}}</td>
+              <td>{{s.open_time}}-{{s.close_time}}</td>
+              <td><span :class="'tag '+(s.status===1?'tag-confirmed':'tag-cancelled')">{{s.status===1?'营业':'歇业'}}</span></td>
+              <td>
+                <button class="btn btn-sm" @click="openStoreForm(s)">编辑</button>
+                <button class="btn btn-sm btn-danger" @click="deleteStore(s.id)">删除</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Users -->
+      <div v-if="activeMenu === 'users'">
+        <h2>用户管理</h2>
+        <table class="table">
+          <thead><tr><th>ID</th><th>昵称</th><th>手机号</th><th>角色</th><th>状态</th><th>注册时间</th><th>操作</th></tr></thead>
+          <tbody>
+            <tr v-for="u in users" :key="u.id">
+              <td>{{u.id}}</td>
+              <td>{{u.nickname}}</td>
+              <td>{{u.phone || '-'}}</td>
+              <td>{{u.role === 'admin' ? '管理员' : '用户'}}</td>
+              <td><span :class="'tag '+(u.status===1?'tag-confirmed':'tag-cancelled')">{{u.status===1?'正常':'禁用'}}</span></td>
+              <td>{{u.created_at}}</td>
+              <td>
+                <button class="btn btn-sm" @click="toggleUserStatus(u)">{{u.status===1?'禁用':'启用'}}</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Coupons -->
+      <div v-if="activeMenu === 'coupons'">
+        <h2>优惠券管理</h2>
+        <button class="btn btn-primary" @click="openCouponForm()">+ 新增优惠券</button>
+        <table class="table" style="margin-top:16px">
+          <thead><tr><th>ID</th><th>名称</th><th>类型</th><th>面值</th><th>门槛</th><th>有效期(天)</th><th>已领/总量</th><th>状态</th><th>操作</th></tr></thead>
+          <tbody>
+            <tr v-for="c in coupons" :key="c.id">
+              <td>{{c.id}}</td>
+              <td>{{c.name}}</td>
+              <td>{{c.type==='percent'?'百分比':'满减'}}</td>
+              <td>{{c.type==='percent'?c.discount_value+'%':'¥'+c.discount_value}}</td>
+              <td>¥{{c.min_amount}}</td>
+              <td>{{c.valid_days}}</td>
+              <td>{{c.used_count}}/{{c.total_count}}</td>
+              <td><span :class="'tag '+(c.status===1?'tag-confirmed':'tag-cancelled')">{{c.status===1?'启用':'停用'}}</span></td>
+              <td>
+                <button class="btn btn-sm" @click="openCouponForm(c)">编辑</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Banners -->
+      <div v-if="activeMenu === 'banners'">
+        <h2>轮播图管理</h2>
+        <button class="btn btn-primary" @click="openBannerForm()">+ 新增轮播图</button>
+        <table class="table" style="margin-top:16px">
+          <thead><tr><th>ID</th><th>图片预览</th><th>标题</th><th>排序</th><th>状态</th><th>操作</th></tr></thead>
+          <tbody>
+            <tr v-for="b in banners" :key="b.id">
+              <td>{{b.id}}</td>
+              <td>
+                <div v-if="b.image_url" style="width:120px;height:60px;overflow:hidden;border-radius:6px">
+                  <img :src="b.image_url" style="width:100%;object-fit:cover" />
+                </div>
+                <span v-else style="color:#999">纯文字轮播</span>
+              </td>
+              <td>{{b.title}}</td>
+              <td>{{b.sort_order}}</td>
+              <td><span :class="'tag '+(b.status===1?'tag-confirmed':'tag-cancelled')">{{b.status===1?'启用':'禁用'}}</span></td>
+              <td>
+                <button class="btn btn-sm" @click="openBannerForm(b)">编辑</button>
+                <button class="btn btn-sm btn-danger" @click="deleteBanner(b.id)">删除</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Reviews -->
+      <div v-if="activeMenu === 'reviews'">
+        <h2>评价管理</h2>
+        <table class="table">
+          <thead><tr><th>ID</th><th>用户</th><th>订单号</th><th>评分</th><th>内容</th><th>时间</th><th>操作</th></tr></thead>
+          <tbody>
+            <tr v-for="r in reviews" :key="r.id">
+              <td>{{r.id}}</td>
+              <td>{{r.nickname}}</td>
+              <td>{{r.order_no}}</td>
+              <td>{{'★'.repeat(r.rating)}}</td>
+              <td>{{r.content}}</td>
+              <td>{{r.created_at}}</td>
+              <td><button class="btn btn-sm btn-danger" @click="deleteReview(r.id)">删除</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- Modal for Service Form -->
+    <div class="modal" v-if="showServiceForm">
+      <div class="modal-content">
+        <h3>{{editingService.id ? '编辑服务' : '新增服务'}}</h3>
+        <div class="form-grid">
+          <input v-model="editingService.name" placeholder="服务名称" class="input">
+          <input v-model="editingService.icon" placeholder="图标 (emoji)" class="input">
+          <input v-model="editingService.category" placeholder="分类" class="input">
+          <input v-model.number="editingService.price" type="number" placeholder="价格" class="input">
+          <input v-model.number="editingService.original_price" type="number" placeholder="原价" class="input">
+          <input v-model.number="editingService.duration" type="number" placeholder="时长(分钟)" class="input">
+        </div>
+        <textarea v-model="editingService.description" placeholder="服务描述" class="input" style="width:100%;margin-top:12px" rows="3"></textarea>
+        <div class="modal-actions">
+          <button class="btn" @click="showServiceForm=false">取消</button>
+          <button class="btn btn-primary" @click="saveService">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Store Form -->
+    <div class="modal" v-if="showStoreForm">
+      <div class="modal-content">
+        <h3>{{editingStore.id ? '编辑门店' : '新增门店'}}</h3>
+        <div class="form-grid">
+          <input v-model="editingStore.name" placeholder="门店名称" class="input">
+          <input v-model="editingStore.address" placeholder="详细地址" class="input">
+          <input v-model="editingStore.phone" placeholder="联系电话" class="input">
+          <input v-model="editingStore.open_time" placeholder="营业开始 08:00" class="input">
+          <input v-model="editingStore.close_time" placeholder="营业结束 20:00" class="input">
+          <input v-model.number="editingStore.latitude" type="number" placeholder="纬度" class="input">
+          <input v-model.number="editingStore.longitude" type="number" placeholder="经度" class="input">
+        </div>
+        <textarea v-model="editingStore.description" placeholder="门店介绍" class="input" style="width:100%;margin-top:12px" rows="3"></textarea>
+        <div class="modal-actions">
+          <button class="btn" @click="showStoreForm=false">取消</button>
+          <button class="btn btn-primary" @click="saveStore">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Coupon Form -->
+    <div class="modal" v-if="showCouponForm">
+      <div class="modal-content">
+        <h3>{{editingCoupon.id ? '编辑优惠券' : '新增优惠券'}}</h3>
+        <div class="form-grid">
+          <input v-model="editingCoupon.name" placeholder="优惠券名称" class="input">
+          <select v-model="editingCoupon.type" class="input">
+            <option value="discount">满减券</option>
+            <option value="percent">百分比券</option>
+          </select>
+          <input v-model.number="editingCoupon.discount_value" type="number" placeholder="面值/百分比" class="input">
+          <input v-model.number="editingCoupon.min_amount" type="number" placeholder="最低消费" class="input">
+          <input v-model.number="editingCoupon.valid_days" type="number" placeholder="有效期(天)" class="input">
+          <input v-model.number="editingCoupon.total_count" type="number" placeholder="发行量" class="input">
+        </div>
+        <div class="modal-actions">
+          <button class="btn" @click="showCouponForm=false">取消</button>
+          <button class="btn btn-primary" @click="saveCoupon">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Banner Form -->
+    <div class="modal" v-if="showBannerForm">
+      <div class="modal-content">
+        <h3>{{editingBanner.id ? '编辑轮播图' : '新增轮播图'}}</h3>
+        <div class="form-grid">
+          <input v-model="editingBanner.title" placeholder="标题文字" class="input">
+          <input v-model.number="editingBanner.sort_order" type="number" placeholder="排序（数字越小越前）" class="input">
+          <input v-model="editingBanner.link_url" placeholder="点击跳转链接（可选）" class="input">
+        </div>
+        <div style="margin-top:12px">
+          <label class="input" style="display:block;text-align:center;cursor:pointer;background:#FAFAFA">
+            {{editingBanner.image_url ? '已选择图片，点击更换' : '点击上传轮播图片'}}
+            <input type="file" accept="image/*" style="display:none" @change="uploadBannerImage" />
+          </label>
+          <div v-if="editingBanner.image_url" style="margin-top:8px;text-align:center">
+            <img :src="editingBanner.image_url" style="max-width:100%;max-height:160px;border-radius:8px" />
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn" @click="showBannerForm=false">取消</button>
+          <button class="btn btn-primary" @click="saveBanner">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="js/admin.js"></script>
+</body>
+</html>

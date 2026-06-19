@@ -1,0 +1,57 @@
+<view class="container" wx:if="{{order}}">
+  <navigation-bar title="订单详情"></navigation-bar>
+
+  <view class="status-header flex-center">
+    <text class="status-text" style="color:{{util.getOrderStatusColor(order.status)}}">{{util.getOrderStatusText(order.status)}}</text>
+  </view>
+
+  <view class="card">
+    <text class="card-title">进度追踪</text>
+    <view class="timeline">
+      <view class="timeline-item" wx:for="{{statusSteps}}" wx:key="text">
+        <view class="timeline-dot {{item.done ? 'done' : ''}}">
+          <text wx:if="{{item.done}}">✓</text>
+        </view>
+        <view class="timeline-content flex-1">
+          <text class="timeline-title">{{item.text}}</text>
+          <text class="timeline-time" wx:if="{{item.time}}">{{item.time}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <text class="card-title">服务信息</text>
+    <view class="info-row flex-between"><text>服务项目</text><text>{{order.service_name}}</text></view>
+    <view class="info-row flex-between"><text>预约门店</text><text>{{order.store_name}}</text></view>
+    <view class="info-row flex-between"><text>门店地址</text><text>{{order.store_address}}</text></view>
+    <view class="info-row flex-between"><text>联系电话</text><text class="link">{{order.store_phone}}</text></view>
+  </view>
+
+  <view class="card">
+    <text class="card-title">预约信息</text>
+    <view class="info-row flex-between"><text>预约日期</text><text>{{order.appoint_date}}</text></view>
+    <view class="info-row flex-between"><text>预约时间</text><text>{{order.appoint_time}}</text></view>
+    <view class="info-row flex-between"><text>订单编号</text><text>{{order.order_no}}</text></view>
+    <view class="info-row flex-between"><text>实付金额</text><text class="price">¥{{order.amount}}</text></view>
+  </view>
+
+  <view class="card" wx:if="{{order.plate_no}}">
+    <text class="card-title">车辆信息</text>
+    <view class="info-row flex-between"><text>车牌号</text><text>{{order.plate_no}}</text></view>
+    <view class="info-row flex-between"><text>品牌型号</text><text>{{order.brand}} {{order.model}}</text></view>
+  </view>
+
+  <view class="card" wx:if="{{review}}">
+    <text class="card-title">我的评价</text>
+    <view class="stars flex">
+      <text wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="star {{item <= review.rating ? 'active' : ''}}">★</text>
+    </view>
+    <text class="review-content" wx:if="{{review.content}}">{{review.content}}</text>
+  </view>
+
+  <view class="bottom-bar flex-between">
+    <button class="btn-outline" style="padding:18rpx 32rpx;font-size:26rpx;" wx:if="{{order.status === 'pending'}}" bindtap="cancelOrder">取消订单</button>
+    <button class="btn-primary" style="padding:18rpx 32rpx;font-size:26rpx;" wx:if="{{order.status === 'completed' && !review}}" bindtap="goToReview">去评价</button>
+  </view>
+</view>

@@ -1,0 +1,5 @@
+.form { margin: 24rpx; }
+.form-item { padding: 20rpx 0; border-bottom: 1rpx solid var(--border); }
+.form-label { font-size: 28rpx; color: var(--text); display: block; margin-bottom: 12rpx; }
+.required { color: var(--danger); }
+.form-input { font-size: 28rpx; padding: 12rpx 0; width: 100%; }

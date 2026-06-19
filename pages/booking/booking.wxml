@@ -1,0 +1,128 @@
+<view class="container">
+  <navigation-bar title="预约洗车"></navigation-bar>
+
+  <!-- Step 1: Select Service -->
+  <view wx:if="{{step === 1}}">
+    <view class="step-title px-24"><text>选择服务项目</text></view>
+    <view class="px-24">
+      <view
+        class="select-card card flex {{selectedService && selectedService.id === item.id ? 'selected' : ''}}"
+        wx:for="{{services}}" wx:key="id" bindtap="selectService" data-id="{{item.id}}"
+      >
+        <text class="s-icon">{{item.icon}}</text>
+        <view class="flex-1">
+          <view class="flex-between">
+            <text class="s-name">{{item.name}}</text>
+            <text class="s-price">¥{{item.price}}</text>
+          </view>
+          <text class="s-desc">{{item.description}}</text>
+        </view>
+        <text class="check-mark" wx:if="{{selectedService && selectedService.id === item.id}}">✓</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Step 2: Select Store -->
+  <view wx:if="{{step === 2}}">
+    <view class="step-title flex-between px-24">
+      <text bindtap="prevStep">← 返回</text>
+      <text>选择门店</text>
+    </view>
+    <view class="px-24">
+      <view
+        class="select-card card flex {{selectedStore && selectedStore.id === item.id ? 'selected' : ''}}"
+        wx:for="{{stores}}" wx:key="id" bindtap="selectStore" data-id="{{item.id}}"
+      >
+        <text class="s-icon">🏪</text>
+        <view class="flex-1">
+          <text class="s-name">{{item.name}}</text>
+          <text class="s-desc">{{item.address}}</text>
+        </view>
+        <text class="check-mark" wx:if="{{selectedStore && selectedStore.id === item.id}}">✓</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Step 3: Select Date & Time -->
+  <view wx:if="{{step === 3}}">
+    <view class="step-title flex-between px-24">
+      <text bindtap="prevStep">← 返回</text>
+      <text>选择时间</text>
+    </view>
+    <view class="card">
+      <scroll-view scroll-x class="date-scroll">
+        <view
+          class="date-item {{selectedDate === item.value ? 'active' : ''}}"
+          wx:for="{{dateRange}}" wx:key="value" bindtap="selectDate" data-date="{{item.value}}"
+        >
+          <text class="date-weekday">{{item.weekday}}</text>
+          <text class="date-label">{{item.label}}</text>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="time-grid px-24">
+      <view
+        class="time-item {{selectedTime === item.value ? 'active' : ''}}"
+        wx:for="{{timeSlots}}" wx:key="value" bindtap="selectTime" data-time="{{item.value}}"
+      >{{item.label}}</view>
+    </view>
+    <view class="px-24">
+      <view class="card" wx:if="{{vehicles.length}}" >
+        <text class="card-title">选择车辆</text>
+        <view class="vehicle-row" wx:for="{{vehicles}}" wx:key="id" bindtap="selectVehicle" data-id="{{item.id}}">
+          <view class="flex-between">
+            <text>{{item.plate_no}} {{item.brand}} {{item.model}}</text>
+            <text class="check-mark" wx:if="{{selectedVehicle === item.id}}">✓</text>
+          </view>
+        </view>
+      </view>
+      <view class="card mt-24">
+        <text class="card-title">备注</text>
+        <input class="remark-input" placeholder="如有特殊需求请在此备注" bindinput="onRemarkInput" />
+      </view>
+    </view>
+  </view>
+
+  <!-- Step 4: Confirm -->
+  <view wx:if="{{step === 4}}">
+    <view class="step-title flex-between px-24">
+      <text bindtap="prevStep">← 返回</text>
+      <text>确认订单</text>
+    </view>
+    <view class="card">
+      <text class="card-title">订单摘要</text>
+      <view class="summary-row flex-between"><text>服务项目</text><text>{{selectedService.name}}</text></view>
+      <view class="summary-row flex-between"><text>预约门店</text><text>{{selectedStore.name}}</text></view>
+      <view class="summary-row flex-between"><text>预约时间</text><text>{{selectedDate}} {{selectedTime}}</text></view>
+      <view wx:if="{{selectedVehicle}}" class="summary-row flex-between"><text>车辆</text><text>{{selectedVehicle}}</text></view>
+    </view>
+
+    <view class="card" wx:if="{{availableCoupons.length}}">
+      <text class="card-title">优惠券</text>
+      <view
+        class="coupon-row flex-between"
+        wx:for="{{availableCoupons}}" wx:key="id" bindtap="selectCoupon" data-id="{{item.id}}"
+      >
+        <view>
+          <text class="coupon-tag">{{item.type === 'percent' ? item.discount_value + '%' : '¥' + item.discount_value}}</text>
+          <text>{{item.name}}</text>
+        </view>
+        <text class="check-mark" wx:if="{{selectedCoupon && selectedCoupon.id === item.id}}">✓</text>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="summary-row flex-between" style="font-weight:600;">
+        <text>合计</text>
+        <text class="s-price">¥{{totalAmount}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Bottom Bar -->
+  <view class="bottom-bar flex-between">
+    <text class="total-text">合计 ¥{{totalAmount}}</text>
+    <button class="book-btn" bindtap="handleNextStep" wx:if="{{step < 4}}">下一步</button>
+    <button class="book-btn" bindtap="submitOrder" wx:if="{{step === 4}}">确认预约</button>
+  </view>
+</view>

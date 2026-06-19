@@ -1,0 +1,91 @@
+<view class="container">
+  <navigation-bar title="{{isAdmin ? '数据统计' : '我的订单'}}"></navigation-bar>
+
+  <!-- ========== 管理员：数据统计 ========== -->
+  <block wx:if="{{isAdmin}}">
+    <view class="a-header">
+      <text class="a-title">经营数据</text>
+    </view>
+
+    <view class="stat-cards">
+      <view class="stat-row flex">
+        <view class="stat-half">
+          <text class="sh-num">{{dashboard.todayOrders}}</text>
+          <text class="sh-label">今日订单</text>
+        </view>
+        <view class="stat-half">
+          <text class="sh-num">¥{{dashboard.todayRevenue}}</text>
+          <text class="sh-label">今日营收</text>
+        </view>
+      </view>
+      <view class="stat-row flex">
+        <view class="stat-half">
+          <text class="sh-num">{{dashboard.totalUsers}}</text>
+          <text class="sh-label">用户总数</text>
+        </view>
+        <view class="stat-half">
+          <text class="sh-num">{{dashboard.totalServices}}</text>
+          <text class="sh-label">在售服务</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 订单状态分布 -->
+    <view class="card mx-24">
+      <text class="card-title">订单状态分布</text>
+      <view class="chart-bar">
+        <view class="bar-row flex" wx:for="{{['pending','confirmed','in_progress','completed','cancelled']}}" wx:key="*this">
+          <text class="bar-label">{{util.getOrderStatusText(item)}}</text>
+          <view class="bar-track flex-1">
+            <view class="bar-fill" style="width:{{(statusCounts[item] || 0) / 10 * 100}}%;background:{{util.getOrderStatusColor(item)}}"></view>
+          </view>
+          <text class="bar-num">{{statusCounts[item] || 0}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 最近收入 -->
+    <view class="card mx-24" wx:if="{{revenueData.length}}">
+      <text class="card-title">各日收入</text>
+      <view class="revenue-list">
+        <view class="r-row flex-between" wx:for="{{revenueData}}" wx:key="date">
+          <text class="r-date">{{item.date}}</text>
+          <text class="r-amount">¥{{item.amount}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- ========== 普通用户：我的订单 ========== -->
+  <block wx:else>
+    <scroll-view scroll-x class="tab-scroll">
+      <text
+        wx:for="{{tabs}}" wx:key="key"
+        class="tab-item {{activeTab === item.key ? 'active' : ''}}"
+        bindtap="switchTab" data-key="{{item.key}}"
+      >{{item.label}}</text>
+    </scroll-view>
+
+    <view wx:if="{{orders.length === 0}}" class="empty-state">
+      <text class="empty-icon">📋</text>
+      <text class="empty-text">暂无订单</text>
+    </view>
+
+    <view class="order-list px-24" wx:if="{{orders.length > 0}}">
+      <view class="order-card card" wx:for="{{orders}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+        <view class="flex-between">
+          <text class="order-no">{{item.order_no}}</text>
+          <text class="order-status" style="color:{{util.getOrderStatusColor(item.status)}}">{{util.getOrderStatusText(item.status)}}</text>
+        </view>
+        <view class="flex-between mt-16">
+          <text class="order-service">{{item.service_name}}</text>
+        </view>
+        <view class="flex-between mt-16">
+          <text class="order-store">{{item.store_name}}</text>
+          <text class="order-amount">¥{{item.amount}}</text>
+        </view>
+        <text class="order-time">{{item.appoint_date}} {{item.appoint_time}}</text>
+      </view>
+    </view>
+  </block>
+</view>

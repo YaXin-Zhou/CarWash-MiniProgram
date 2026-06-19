@@ -1,0 +1,26 @@
+<view class="container">
+  <navigation-bar title="{{isEdit ? '编辑车辆' : '添加车辆'}}"></navigation-bar>
+
+  <view class="form card">
+    <view class="form-item">
+      <text class="form-label">车牌号 <text class="required">*</text></text>
+      <input class="form-input" placeholder="请输入车牌号" value="{{plate_no}}" bindinput="onPlateInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">品牌</text>
+      <input class="form-input" placeholder="如：奔驰" value="{{brand}}" bindinput="onBrandInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">型号</text>
+      <input class="form-input" placeholder="如：C200L" value="{{model}}" bindinput="onModelInput" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">颜色</text>
+      <input class="form-input" placeholder="如：白色" value="{{color}}" bindinput="onColorInput" />
+    </view>
+  </view>
+
+  <view class="px-24 mt-24">
+    <button class="btn-primary" style="width:100%" bindtap="save">保存</button>
+  </view>
+</view>

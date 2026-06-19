@@ -1,0 +1,27 @@
+<view class="container">
+  <navigation-bar title="车辆管理"></navigation-bar>
+
+  <view wx:if="{{vehicles.length === 0}}" class="empty-state">
+    <text class="empty-icon">🚗</text>
+    <text class="empty-text">暂无车辆，点击下方添加</text>
+  </view>
+
+  <view class="px-24" wx:if="{{vehicles.length > 0}}">
+    <view class="vehicle-card card" wx:for="{{vehicles}}" wx:key="id">
+      <view class="flex-between">
+        <view>
+          <text class="plate-no">{{item.plate_no}}</text>
+          <text class="car-info">{{item.brand}} {{item.model}} {{item.color}}</text>
+        </view>
+        <view class="flex">
+          <text class="action-btn" bindtap="editVehicle" data-id="{{item.id}}">编辑</text>
+          <text class="action-btn delete" bindtap="deleteVehicle" data-id="{{item.id}}">删除</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="px-24 mt-24">
+    <button class="btn-primary" style="width:100%" bindtap="addVehicle">添加车辆</button>
+  </view>
+</view>

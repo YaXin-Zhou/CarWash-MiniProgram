@@ -1,0 +1,19 @@
+<view class="container">
+  <navigation-bar title="选择门店"></navigation-bar>
+
+  <view class="store-list px-24">
+    <view class="store-card card" wx:for="{{stores}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+      <view class="flex">
+        <view class="store-icon">🏪</view>
+        <view class="flex-1">
+          <text class="store-name">{{item.name}}</text>
+          <text class="gray-text">{{item.address}}</text>
+          <view class="flex-between mt-16">
+            <text class="store-time">营业时间 {{item.open_time}}-{{item.close_time}}</text>
+            <text class="store-dist">约1.2km</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

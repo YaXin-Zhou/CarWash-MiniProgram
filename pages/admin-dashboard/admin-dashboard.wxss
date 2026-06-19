@@ -1,0 +1,37 @@
+.admin-header {
+  background: linear-gradient(135deg, #001529, #1677FF);
+  padding: 40rpx 32rpx;
+}
+.admin-title { font-size: 40rpx; font-weight: 700; color: #fff; display: block; }
+.admin-date { font-size: 24rpx; color: rgba(255,255,255,0.7); display: block; margin-top: 8rpx; }
+
+.stat-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16rpx;
+  padding: 16rpx 24rpx; margin-top: -20rpx;
+}
+.stat-item {
+  background: #fff; border-radius: var(--radius); padding: 28rpx;
+  text-align: center; box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
+}
+.s-num { font-size: 40rpx; font-weight: 700; color: var(--primary); display: block; }
+.s-label { font-size: 24rpx; color: var(--text-muted); display: block; margin-top: 6rpx; }
+
+.card-label { font-size: 30rpx; font-weight: 600; color: var(--primary); }
+.arrow { color: var(--text-muted); }
+.section-title { font-size: 28rpx; font-weight: 600; color: var(--text); margin: 8rpx 0 8rpx; }
+
+.order-list { padding-bottom: 32rpx; }
+.order-card { margin: 12rpx 0; }
+.o-no { font-size: 22rpx; color: var(--text-muted); display: block; }
+.o-user { font-size: 24rpx; color: var(--text-secondary); margin-left: 16rpx; }
+.o-status { font-size: 26rpx; font-weight: 600; }
+.o-service { font-size: 28rpx; color: var(--text); }
+.o-amount { font-size: 30rpx; color: var(--danger); font-weight: 600; }
+.o-time { font-size: 22rpx; color: var(--text-muted); display: block; margin-top: 8rpx; }
+
+.o-actions { gap: 16rpx; margin-top: 20rpx; }
+.o-actions button { flex: 1; border-radius: 32rpx; font-size: 26rpx; padding: 14rpx 0; border: none; }
+.btn-confirm { background: var(--primary); color: #fff; }
+.btn-cancel { background: #F5F5F5; color: var(--text-secondary); }
+
+.empty-state { text-align: center; padding: 60rpx 0; color: var(--text-muted); font-size: 26rpx; }

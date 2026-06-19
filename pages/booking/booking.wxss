@@ -1,0 +1,50 @@
+.step-title { font-size: 32rpx; font-weight: 600; color: var(--text); margin: 24rpx 0 16rpx; }
+
+.select-card { margin: 12rpx 0; position: relative; }
+.select-card.selected { border: 2rpx solid var(--primary); background: var(--primary-light); }
+.s-icon { font-size: 48rpx; margin-right: 20rpx; }
+.s-name { font-size: 28rpx; font-weight: 600; color: var(--text); }
+.s-price { font-size: 32rpx; color: var(--danger); font-weight: 600; }
+.s-desc { font-size: 24rpx; color: var(--text-muted); display: block; margin-top: 4rpx; }
+.check-mark { color: var(--primary); font-size: 36rpx; font-weight: 700; }
+
+.date-scroll { white-space: nowrap; padding: 8rpx 0; }
+.date-item {
+  display: inline-flex; flex-direction: column; align-items: center;
+  padding: 16rpx 24rpx; margin-right: 12rpx; border-radius: var(--radius);
+  min-width: 120rpx;
+}
+.date-item.active { background: var(--primary); }
+.date-item.active text { color: #fff; }
+.date-weekday { font-size: 22rpx; color: var(--text-muted); }
+.date-label { font-size: 26rpx; color: var(--text); margin-top: 4rpx; }
+
+.time-grid { display: flex; flex-wrap: wrap; gap: 16rpx; padding: 16rpx 24rpx; }
+.time-item {
+  font-size: 26rpx; padding: 14rpx 0; text-align: center;
+  background: #F5F5F5; border-radius: var(--radius); width: calc(25% - 12rpx);
+}
+.time-item.active { background: var(--primary); color: #fff; }
+
+.card-title { font-size: 28rpx; font-weight: 600; color: var(--text); margin-bottom: 16rpx; display: block; }
+.vehicle-row { padding: 16rpx 0; border-bottom: 1rpx solid var(--border); }
+
+.summary-row { padding: 12rpx 0; font-size: 28rpx; color: var(--text); }
+.coupon-row { padding: 16rpx 0; border-bottom: 1rpx solid var(--border); }
+.coupon-tag {
+  font-size: 22rpx; background: #FFF1F0; color: var(--danger);
+  border-radius: 6rpx; padding: 4rpx 10rpx; margin-right: 12rpx;
+}
+
+.remark-input { font-size: 26rpx; padding: 16rpx; background: #F5F5F5; border-radius: 12rpx; width: 100%; }
+
+.bottom-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--white); padding: 20rpx 32rpx;
+  box-shadow: 0 -2rpx 12rpx rgba(0,0,0,0.05);
+}
+.total-text { font-size: 30rpx; color: var(--text); }
+.book-btn {
+  background: var(--primary); color: #fff; border-radius: 44rpx;
+  font-size: 28rpx; padding: 18rpx 48rpx; border: none;
+}

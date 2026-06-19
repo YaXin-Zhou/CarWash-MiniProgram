@@ -1,0 +1,37 @@
+<view class="container" wx:if="{{service}}">
+  <navigation-bar title="服务详情"></navigation-bar>
+
+  <view class="detail-header flex-center">
+    <text class="detail-icon">{{service.icon}}</text>
+  </view>
+
+  <view class="card">
+    <view class="flex-between">
+      <text class="d-name">{{service.name}}</text>
+      <view class="d-price-row">
+        <text class="d-price">¥{{service.price}}</text>
+        <text class="d-original" wx:if="{{service.original_price > service.price}}">¥{{service.original_price}}</text>
+      </view>
+    </view>
+    <view class="d-info flex mt-24">
+      <view class="info-item">
+        <text class="info-label">服务时长</text>
+        <text class="info-val">{{service.duration}}分钟</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">服务分类</text>
+        <text class="info-val">{{service.category}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <text class="card-title">服务介绍</text>
+    <text class="d-desc">{{service.description}}</text>
+  </view>
+
+  <view class="bottom-bar flex-between">
+    <text class="total-price">¥{{service.price}}</text>
+    <button class="book-btn" bindtap="goToBooking">立即预约</button>
+  </view>
+</view>

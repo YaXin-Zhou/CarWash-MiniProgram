@@ -1,0 +1,28 @@
+<view class="container">
+  <navigation-bar title="写评价"></navigation-bar>
+
+  <view class="card">
+    <text class="card-title">评分</text>
+    <view class="stars flex">
+      <text
+        wx:for="{{[1,2,3,4,5]}}" wx:key="*this"
+        class="star {{item <= rating ? 'active' : ''}}"
+        bindtap="setRating" data-rating="{{item}}"
+      >★</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <text class="card-title">评价内容</text>
+    <textarea
+      class="review-textarea"
+      placeholder="分享您的服务体验..."
+      maxlength="500"
+      bindinput="onContentInput"
+    ></textarea>
+  </view>
+
+  <view class="px-24 mt-24">
+    <button class="btn-primary" style="width:100%" bindtap="submit">提交评价</button>
+  </view>
+</view>

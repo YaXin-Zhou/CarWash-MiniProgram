@@ -1,0 +1,14 @@
+<view class="container">
+  <navigation-bar title="设置"></navigation-bar>
+
+  <view class="menu-section mt-24">
+    <view class="menu-item flex-between" bindtap="showAbout">
+      <text>关于我们</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item flex-between" bindtap="callService">
+      <text>联系客服</text>
+      <text class="menu-val">13800138000</text>
+    </view>
+  </view>
+</view>

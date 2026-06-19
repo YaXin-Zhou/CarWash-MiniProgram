@@ -1,0 +1,10 @@
+.store-list { padding-top: 16rpx; }
+.store-card { margin: 16rpx 0; }
+.store-icon {
+  font-size: 48rpx; margin-right: 20rpx; width: 80rpx; height: 80rpx;
+  background: #F0F5FF; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+}
+.store-name { font-size: 30rpx; font-weight: 600; color: var(--text); display: block; }
+.gray-text { font-size: 24rpx; color: var(--text-secondary); display: block; margin-top: 4rpx; }
+.store-time { font-size: 22rpx; color: var(--primary); }
+.store-dist { font-size: 22rpx; color: var(--text-muted); }

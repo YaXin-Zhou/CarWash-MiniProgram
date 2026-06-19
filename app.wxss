@@ -1,0 +1,78 @@
+/**app.wxss**/
+page {
+  --primary: #1677FF;
+  --primary-light: #E6F4FF;
+  --success: #52C41A;
+  --warning: #FAAD14;
+  --danger: #FF4D4F;
+  --text: #333333;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  --bg: #F5F7FA;
+  --white: #ffffff;
+  --border: #EBEDF0;
+  --radius: 16rpx;
+  --radius-lg: 24rpx;
+}
+
+.container {
+  min-height: 100vh;
+  background-color: var(--bg);
+  padding-bottom: 20rpx;
+}
+
+/* Page Header */
+.page-header {
+  background: var(--white);
+  padding: 24rpx 32rpx;
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--text);
+  border-bottom: 1rpx solid var(--border);
+}
+
+/* Card */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  margin: 16rpx 24rpx;
+  padding: 24rpx;
+}
+
+/* Button */
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  padding: 20rpx 0;
+  text-align: center;
+  border: none;
+}
+.btn-primary:active { opacity: 0.8; }
+
+.btn-outline {
+  background: var(--white);
+  color: var(--primary);
+  border: 2rpx solid var(--primary);
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  padding: 20rpx 0;
+  text-align: center;
+}
+
+/* Flex Utils */
+.flex { display: flex; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-1 { flex: 1; }
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+
+/* Spacing */
+.mt-16 { margin-top: 16rpx; }
+.mt-24 { margin-top: 24rpx; }
+.mb-16 { margin-bottom: 16rpx; }
+.p-24 { padding: 24rpx; }
+.px-24 { padding-left: 24rpx; padding-right: 24rpx; }

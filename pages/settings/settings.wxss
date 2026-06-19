@@ -1,0 +1,7 @@
+.menu-section { background: var(--white); }
+.menu-item {
+  padding: 28rpx 32rpx; border-bottom: 1rpx solid var(--border);
+  font-size: 30rpx; color: var(--text);
+}
+.menu-arrow { color: var(--text-muted); }
+.menu-val { font-size: 26rpx; color: var(--primary); }

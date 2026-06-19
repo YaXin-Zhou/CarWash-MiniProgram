@@ -1,0 +1,28 @@
+.search-bar { padding-top: 16rpx; padding-bottom: 8rpx; }
+.s-input {
+  background: #fff; border-radius: 40rpx; padding: 16rpx 28rpx;
+  font-size: 26rpx; border: 1rpx solid var(--border);
+}
+
+.tabs {
+  background: #fff; white-space: nowrap; padding: 12rpx 24rpx;
+  border-bottom: 1rpx solid var(--border);
+}
+.tab { display: inline-block; font-size: 26rpx; color: var(--text-secondary); padding: 8rpx 20rpx; }
+.tab.active { color: var(--primary); font-weight: 600; }
+
+.order-list { padding-bottom: 32rpx; }
+.order-card { margin: 12rpx 0; }
+.o-no { font-size: 22rpx; color: var(--text-muted); display: block; }
+.o-user { font-size: 24rpx; color: var(--text-secondary); margin-left: 16rpx; }
+.o-status { font-size: 26rpx; font-weight: 600; }
+.o-service { font-size: 28rpx; color: var(--text); }
+.o-amount { font-size: 30rpx; color: var(--danger); font-weight: 600; }
+.o-time { font-size: 22rpx; color: var(--text-muted); display: block; margin-top: 8rpx; }
+
+.o-actions { gap: 16rpx; margin-top: 20rpx; }
+.o-actions button { flex: 1; border-radius: 32rpx; font-size: 26rpx; padding: 14rpx 0; border: none; }
+.btn-confirm { background: var(--primary); color: #fff; }
+.btn-cancel { background: #F5F5F5; color: var(--text-secondary); }
+
+.empty-state { text-align: center; padding: 60rpx 0; color: var(--text-muted); font-size: 26rpx; }

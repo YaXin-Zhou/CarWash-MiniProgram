@@ -1,0 +1,105 @@
+<view class="container">
+  <navigation-bar title="{{isAdmin ? '管理后台' : '我的'}}"></navigation-bar>
+
+  <view class="profile-header {{isAdmin ? 'admin-style' : ''}}" wx:if="{{userInfo}}">
+    <view class="avatar flex-center">
+      <text wx:if="{{!userInfo.avatar}}">{{isAdmin ? '🛡️' : '👤'}}</text>
+      <image wx:else src="{{userInfo.avatar}}" mode="aspectFill"></image>
+    </view>
+    <view class="flex-1">
+      <text class="nickname">{{userInfo.nickname}}</text>
+      <text class="role-tag" wx:if="{{isAdmin}}">管理员</text>
+      <text class="phone" wx:if="{{userInfo.phone}}">{{userInfo.phone}}</text>
+    </view>
+  </view>
+
+  <!-- Admin Dashboard -->
+  <view wx:if="{{isAdmin && dashboard}}">
+    <view class="admin-stat-grid">
+      <view class="a-stat">
+        <text class="a-num">{{dashboard.todayOrders}}</text>
+        <text class="a-label">今日订单</text>
+      </view>
+      <view class="a-stat">
+        <text class="a-num">¥{{dashboard.todayRevenue}}</text>
+        <text class="a-label">今日营收</text>
+      </view>
+      <view class="a-stat">
+        <text class="a-num">{{dashboard.totalUsers}}</text>
+        <text class="a-label">总用户</text>
+      </view>
+      <view class="a-stat">
+        <text class="a-num">{{dashboard.totalServices}}</text>
+        <text class="a-label">在售服务</text>
+      </view>
+    </view>
+
+    <view class="menu-section mt-24">
+      <view class="menu-item flex-between" bindtap="goToAdminDashboard">
+        <view class="flex">
+          <text class="menu-icon">📊</text>
+          <text>订单处理面板</text>
+        </view>
+        <text class="menu-arrow">></text>
+      </view>
+      <view class="menu-item flex-between" bindtap="goToAdminOrders">
+        <view class="flex">
+          <text class="menu-icon">🔍</text>
+          <text>全部订单检索</text>
+        </view>
+        <text class="menu-arrow">></text>
+      </view>
+    </view>
+
+    <view class="divider px-24">
+      <text class="divider-text">— 个人功能 —</text>
+    </view>
+  </view>
+
+  <!-- Regular User Section -->
+  <view class="stats-card card flex" wx:if="{{!isAdmin}}">
+    <view class="stat-item" bindtap="goToOrders">
+      <text class="stat-num">{{orderCounts.pending}}</text>
+      <text class="stat-label">待确认</text>
+    </view>
+    <view class="stat-item" bindtap="goToOrders">
+      <text class="stat-num">{{orderCounts.in_progress}}</text>
+      <text class="stat-label">进行中</text>
+    </view>
+  </view>
+
+  <view class="menu-section">
+    <view class="menu-item flex-between" bindtap="goToOrders">
+      <view class="flex">
+        <text class="menu-icon">📋</text>
+        <text>我的订单</text>
+      </view>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item flex-between" bindtap="goToVehicles">
+      <view class="flex">
+        <text class="menu-icon">🚗</text>
+        <text>车辆管理</text>
+      </view>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item flex-between" bindtap="goToCoupons">
+      <view class="flex">
+        <text class="menu-icon">🎫</text>
+        <text>优惠券</text>
+      </view>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item flex-between" bindtap="goToSettings">
+      <view class="flex">
+        <text class="menu-icon">⚙️</text>
+        <text>设置</text>
+      </view>
+      <text class="menu-arrow">></text>
+    </view>
+  </view>
+
+  <view class="logout-btn px-24 mt-24">
+    <button class="btn-outline" style="width:100%" bindtap="logout">退出登录</button>
+  </view>
+</view>

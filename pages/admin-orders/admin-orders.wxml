@@ -1,0 +1,55 @@
+<view class="container">
+  <navigation-bar title="订单管理"></navigation-bar>
+
+  <view class="search-bar px-24">
+    <input placeholder="搜索订单号 / 用户" bindinput="onSearchInput" bindconfirm="search" class="s-input" />
+  </view>
+
+  <scroll-view scroll-x class="tabs">
+    <text
+      wx:for="{{tabs}}" wx:key="key"
+      class="tab {{activeTab === item.key ? 'active' : ''}}"
+      bindtap="switchTab" data-key="{{item.key}}"
+    >{{item.label}}</text>
+  </scroll-view>
+
+  <view class="order-list px-24">
+    <view class="order-card card" wx:for="{{orders}}" wx:key="id">
+      <view class="flex-between">
+        <view>
+          <text class="o-no">{{item.order_no}}</text>
+          <text class="o-user">{{item.nickname}}</text>
+        </view>
+        <text class="o-status" style="color:{{util.getOrderStatusColor(item.status)}}">{{util.getOrderStatusText(item.status)}}</text>
+      </view>
+      <view class="flex-between mt-16">
+        <text class="o-service">{{item.service_name}} · {{item.store_name}}</text>
+        <text class="o-amount">¥{{item.amount}}</text>
+      </view>
+      <text class="o-time">{{item.appoint_date}} {{item.appoint_time}}</text>
+
+      <view class="o-actions flex">
+        <button
+          wx:if="{{item.status === 'pending'}}"
+          class="btn-confirm" data-id="{{item.id}}" data-status="confirmed" bindtap="updateStatus"
+        >确认接单</button>
+        <button
+          wx:if="{{item.status === 'pending'}}"
+          class="btn-cancel" data-id="{{item.id}}" data-status="cancelled" bindtap="updateStatus"
+        >取消</button>
+        <button
+          wx:if="{{item.status === 'confirmed'}}"
+          class="btn-confirm" data-id="{{item.id}}" data-status="in_progress" bindtap="updateStatus"
+        >开始服务</button>
+        <button
+          wx:if="{{item.status === 'in_progress'}}"
+          class="btn-confirm" data-id="{{item.id}}" data-status="completed" bindtap="updateStatus"
+        >完成服务</button>
+      </view>
+    </view>
+
+    <view wx:if="{{orders.length === 0}}" class="empty-state">
+      <text>暂无订单</text>
+    </view>
+  </view>
+</view>
