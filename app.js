@@ -31,7 +31,8 @@ App({
     wx.setTabBarItem({ index: 0, text: '仪表盘' });
     wx.setTabBarItem({ index: 1, text: '订单管理' });
     wx.setTabBarItem({ index: 2, text: '数据' });
-    wx.setTabBarItem({ index: 3, text: '我的' });
+    wx.setTabBarItem({ index: 3, text: '知识' });
+    wx.setTabBarItem({ index: 4, text: '我的' });
   },
 
   // 恢复普通用户导航栏
@@ -40,6 +41,7 @@ App({
     wx.setTabBarItem({ index: 1, text: '服务' });
     wx.setTabBarItem({ index: 2, text: '订单' });
     wx.setTabBarItem({ index: 3, text: '我的' });
+    wx.setTabBarItem({ index: 4, text: '知识' });
   },
 
   checkLogin() {

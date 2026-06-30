@@ -17,7 +17,9 @@
     "pages/review/review",
     "pages/settings/settings",
     "pages/admin-dashboard/admin-dashboard",
-    "pages/admin-orders/admin-orders"
+    "pages/admin-orders/admin-orders",
+    "pages/knowledge/knowledge",
+    "pages/profile-edit/profile-edit"
   ],
   "tabBar": {
     "color": "#999999",
@@ -42,6 +44,12 @@
         "text": "订单",
         "iconPath": "images/tab/order.png",
         "selectedIconPath": "images/tab/order-active.png"
+      },
+      {
+        "pagePath": "pages/knowledge/knowledge",
+        "text": "知识",
+        "iconPath": "images/tab/knowledge.png",
+        "selectedIconPath": "images/tab/knowledge-active.png"
       },
       {
         "pagePath": "pages/profile/profile",

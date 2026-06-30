@@ -78,13 +78,22 @@
         <text>服务项目</text>
         <text class="link" bindtap="goToServices">全部 ></text>
       </view>
-      <scroll-view scroll-x class="h-scroll">
-        <view class="service-item" wx:for="{{services}}" wx:key="id" bindtap="goToServiceDetail" data-id="{{item.id}}">
-          <view class="service-icon">{{item.icon}}</view>
-          <text class="service-name">{{item.name}}</text>
-          <text class="price">¥{{item.price}}</text>
+      <view class="service-rows">
+        <view class="sr-row">
+          <view class="sr-item" wx:for="{{serviceRow1}}" wx:key="id" bindtap="goToServiceDetail" data-id="{{item.id}}">
+            <text class="sr-icon">{{item.icon}}</text>
+            <text class="sr-name">{{item.name}}</text>
+            <text class="sr-price">¥{{item.price}}</text>
+          </view>
         </view>
-      </scroll-view>
+        <view class="sr-row">
+          <view class="sr-item" wx:for="{{serviceRow2}}" wx:key="id" bindtap="goToServiceDetail" data-id="{{item.id}}">
+            <text class="sr-icon">{{item.icon}}</text>
+            <text class="sr-name">{{item.name}}</text>
+            <text class="sr-price">¥{{item.price}}</text>
+          </view>
+        </view>
+      </view>
     </view>
 
     <view class="section" wx:if="{{coupons.length}}">

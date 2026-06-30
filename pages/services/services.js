@@ -27,7 +27,7 @@ Page({
     this.setData({ isAdmin: admin });
     if (admin) {
       this.loadOrders();
-    } else if (app.globalData.token) {
+    } else {
       app.get('/api/services').then(services => {
         const cats = [...new Set(services.map(s => s.category))];
         this.setData({ services, categories: cats, activeCategory: cats[0] || '' });

@@ -1,0 +1,24 @@
+<view class="container">
+  <navigation-bar title="养车知识"></navigation-bar>
+
+  <view class="header-banner">
+    <text class="hb-title">养车知识库</text>
+    <text class="hb-sub">掌握爱车养护技巧，用车更省心</text>
+  </view>
+
+  <view class="article-list px-24">
+    <view class="article-card card flex" wx:for="{{articles}}" wx:key="id" bindtap="goToArticle" data-item="{{item}}">
+      <view class="a-icon">{{item.icon}}</view>
+      <view class="flex-1">
+        <view class="flex-between">
+          <text class="a-title">{{item.title}}</text>
+        </view>
+        <text class="a-desc">{{item.desc}}</text>
+        <view class="flex-between mt-16">
+          <text class="a-tag">{{item.tag}}</text>
+          <text class="a-more">查看详情 ></text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

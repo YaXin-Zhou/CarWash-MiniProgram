@@ -1,0 +1,25 @@
+.header-banner {
+  background: linear-gradient(135deg, #52C41A, #95DE64);
+  padding: 44rpx 32rpx 36rpx;
+}
+.hb-title { font-size: 40rpx; font-weight: 700; color: #fff; display: block; }
+.hb-sub { font-size: 24rpx; color: rgba(255,255,255,0.8); display: block; margin-top: 8rpx; }
+
+.article-list { padding-top: 20rpx; padding-bottom: 30rpx; }
+.article-card { margin: 12rpx 0; }
+.a-icon {
+  font-size: 48rpx; margin-right: 20rpx; width: 80rpx; height: 80rpx;
+  background: #F6FFED; border-radius: 16rpx; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.a-title { font-size: 28rpx; font-weight: 600; color: var(--text); display: block; }
+.a-desc {
+  font-size: 24rpx; color: var(--text-secondary); display: block;
+  margin-top: 10rpx; line-height: 1.5; display: -webkit-box;
+  -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+.a-tag {
+  font-size: 20rpx; color: var(--success); background: #F6FFED;
+  padding: 4rpx 14rpx; border-radius: 6rpx;
+}
+.a-more { font-size: 22rpx; color: var(--text-muted); }

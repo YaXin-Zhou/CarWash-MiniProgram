@@ -7,7 +7,8 @@ Page({
     // 用户端
     bannerColors: ['#1677FF', '#52C41A', '#FAAD14', '#FF4D4F', '#722ED1'],
     banners: [],
-    services: [],
+    serviceRow1: [],
+    serviceRow2: [],
     stores: [],
     coupons: [],
     // 管理端
@@ -36,7 +37,12 @@ Page({
   },
 
   loadUserData() {
-    app.get('/api/services').then(services => this.setData({ services }));
+    app.get('/api/services').then(services => {
+      this.setData({
+        serviceRow1: services.slice(0, 5),
+        serviceRow2: services.slice(5, 10)
+      });
+    });
     app.get('/api/stores').then(stores => this.setData({ stores: stores.slice(0, 3) }));
     app.get('/api/banners').then(banners => {
       const colors = this.data.bannerColors;

@@ -4,7 +4,7 @@ Page({
   data: {
     userInfo: null,
     isAdmin: false,
-    orderCounts: { pending: 0, in_progress: 0 },
+    myVehicle: null,
     dashboard: null
   },
 
@@ -16,18 +16,17 @@ Page({
     const userInfo = app.globalData.userInfo;
     const admin = app.isAdmin();
     this.setData({ userInfo, isAdmin: admin });
-    this.loadCounts();
+    this.loadVehicle();
     if (admin) this.loadDashboard();
   },
 
-  async loadCounts() {
-    try {
-      const [pending, progressing] = await Promise.all([
-        app.get('/api/orders', { status: 'pending' }),
-        app.get('/api/orders', { status: 'in_progress' })
-      ]);
-      this.setData({ orderCounts: { pending: pending.length, in_progress: progressing.length } });
-    } catch (e) {}
+  async loadVehicle() {
+    if (!app.isAdmin()) {
+      try {
+        const vehicles = await app.get('/api/vehicles');
+        this.setData({ myVehicle: vehicles.length > 0 ? vehicles[0] : null });
+      } catch (e) {}
+    }
   },
 
   async loadDashboard() {
@@ -49,12 +48,41 @@ Page({
     wx.switchTab({ url: '/pages/orders/orders' });
   },
 
+  goToEditProfile() {
+    wx.navigateTo({ url: '/pages/profile-edit/profile-edit' });
+  },
+
   goToVehicles() {
     wx.navigateTo({ url: '/pages/vehicles/vehicles' });
   },
 
   goToCoupons() {
     wx.navigateTo({ url: '/pages/coupons/coupons' });
+  },
+
+  goToPackages() {
+    wx.showModal({ title: '我的套餐', content: '套餐功能开发中，敬请期待', showCancel: false });
+  },
+  goToPoints() {
+    wx.showModal({ title: '我的积分', content: '积分功能开发中，敬请期待', showCancel: false });
+  },
+  goToTeam() {
+    wx.showModal({ title: '我的团队', content: '团队功能开发中，敬请期待', showCancel: false });
+  },
+
+  showTip(e) {
+    const text = e.currentTarget.dataset.text;
+    wx.showModal({ title: text, content: '功能开发中，敬请期待', showCancel: false });
+  },
+  goToMyReviews() {
+    wx.navigateTo({ url: '/pages/review/review' });
+  },
+  contactService() {
+    wx.showModal({
+      title: '在线客服',
+      content: '客服电话：13800138000\n工作时间：08:00-20:00',
+      showCancel: false
+    });
   },
 
   goToSettings() {

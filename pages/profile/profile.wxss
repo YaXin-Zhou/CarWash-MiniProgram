@@ -1,20 +1,57 @@
+/* 蓝色头部 */
 .profile-header {
   background: linear-gradient(135deg, #1677FF, #69B1FF);
-  padding: 48rpx 32rpx 40rpx;
+  padding: 44rpx 0 32rpx;
 }
+.profile-header.admin-style { background: linear-gradient(135deg, #001529, #1677FF); }
+
+.ph-top { padding: 0 32rpx; align-items: center; }
+
 .avatar {
   width: 120rpx; height: 120rpx; border-radius: 50%; background: rgba(255,255,255,0.3);
   font-size: 56rpx; margin-right: 24rpx; overflow: hidden;
 }
 .avatar image { width: 100%; height: 100%; }
 .nickname { font-size: 36rpx; color: #fff; font-weight: 600; display: block; }
+.account-id { font-size: 22rpx; color: rgba(255,255,255,0.75); display: block; margin-top: 6rpx; }
 .phone { font-size: 26rpx; color: rgba(255,255,255,0.8); display: block; margin-top: 8rpx; }
+.ph-edit {
+  font-size: 24rpx; color: #fff; border: 1rpx solid rgba(255,255,255,0.5);
+  border-radius: 24rpx; padding: 8rpx 20rpx; flex-shrink: 0;
+}
 
-.stats-card { margin: -30rpx 24rpx 0; position: relative; }
-.stat-item { flex: 1; text-align: center; }
-.stat-num { font-size: 40rpx; font-weight: 700; color: var(--text); display: block; }
-.stat-label { font-size: 24rpx; color: var(--text-muted); display: block; margin-top: 4rpx; }
+.role-tag {
+  display: inline-block; font-size: 20rpx; color: #FFD666;
+  background: rgba(255,214,102,0.2); border: 1rpx solid #FFD666;
+  border-radius: 6rpx; padding: 2rpx 12rpx; margin-top: 6rpx;
+}
 
+/* 蓝色背景底部4个入口卡片 */
+.ph-cards {
+  display: flex; margin: 32rpx 32rpx 0; gap: 8rpx;
+}
+.ph-card {
+  flex: 1; background: rgba(255,255,255,0.2); border-radius: 12rpx;
+  padding: 14rpx 0; text-align: center; backdrop-filter: blur(10rpx);
+}
+.phc-icon { font-size: 28rpx; display: block; }
+.phc-label { font-size: 20rpx; color: #fff; display: block; margin-top: 4rpx; }
+
+/* 车辆卡片 */
+.vehicle-card {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 20rpx 20rpx 0; padding: 28rpx 28rpx;
+  background: linear-gradient(135deg, #F0F5FF, #E6F7FF);
+  border-radius: var(--radius-lg); border: 1rpx solid #BAE0FF;
+}
+.vc-title { font-size: 30rpx; font-weight: 700; color: var(--primary); display: block; }
+.vc-desc { font-size: 24rpx; color: var(--text-secondary); display: block; margin-top: 6rpx; }
+.vc-empty { color: var(--text-muted); font-style: italic; }
+.vc-right { display: flex; flex-direction: column; align-items: center; }
+.vc-icon { font-size: 52rpx; }
+.vc-arrow { font-size: 22rpx; color: var(--primary); margin-top: 4rpx; }
+
+/* 菜单 */
 .menu-section { background: var(--white); }
 .menu-item {
   padding: 28rpx 32rpx; border-bottom: 1rpx solid var(--border);
@@ -23,12 +60,7 @@
 .menu-icon { margin-right: 16rpx; font-size: 36rpx; }
 .menu-arrow { color: var(--text-muted); }
 
-.profile-header.admin-style { background: linear-gradient(135deg, #001529, #1677FF); }
-.role-tag {
-  display: inline-block; font-size: 20rpx; color: #FFD666;
-  background: rgba(255,214,102,0.2); border: 1rpx solid #FFD666;
-  border-radius: 6rpx; padding: 2rpx 12rpx; margin-top: 6rpx;
-}
+/* 管理员统计 */
 .admin-stat-grid {
   display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
   background: #fff; margin: -20rpx 16rpx 0; border-radius: var(--radius);
@@ -40,3 +72,13 @@
 
 .divider { text-align: center; padding: 24rpx 0 8rpx; }
 .divider-text { font-size: 24rpx; color: var(--text-muted); }
+
+/* 我的功能 */
+.func-section { background: #fff; border-radius: var(--radius); margin: 24rpx; padding: 24rpx; }
+.func-title { font-size: 28rpx; font-weight: 600; color: var(--text); display: block; margin-bottom: 20rpx; }
+.func-grid { display: flex; flex-wrap: wrap; }
+.func-item {
+  width: 25%; display: flex; flex-direction: column; align-items: center; padding: 16rpx 0;
+}
+.func-icon { font-size: 44rpx; display: block; margin-bottom: 8rpx; }
+.func-label { font-size: 22rpx; color: var(--text); }

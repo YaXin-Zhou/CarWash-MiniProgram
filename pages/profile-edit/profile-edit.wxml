@@ -1,0 +1,30 @@
+<view class="container">
+  <navigation-bar title="编辑资料"></navigation-bar>
+
+  <view class="avatar-area flex-center" bindtap="chooseAvatar">
+    <view class="avatar-box">
+      <image wx:if="{{avatar}}" src="{{avatar}}" mode="aspectFill"></image>
+      <text wx:else class="avatar-placeholder">👤</text>
+    </view>
+    <text class="avatar-tip">点击更换头像</text>
+  </view>
+
+  <view class="form card">
+    <view class="form-item">
+      <text class="form-label">会员号</text>
+      <text class="form-value">{{'CW' + (10000 + userId)}}</text>
+    </view>
+    <view class="form-item">
+      <text class="form-label">昵称</text>
+      <input class="form-input" value="{{nickname}}" placeholder="输入昵称" bindinput="onNickname" />
+    </view>
+    <view class="form-item">
+      <text class="form-label">手机号</text>
+      <input class="form-input" type="number" value="{{phone}}" placeholder="输入手机号" bindinput="onPhone" />
+    </view>
+  </view>
+
+  <view class="px-24 mt-24">
+    <button class="btn-primary" style="width:100%" bindtap="save">保存</button>
+  </view>
+</view>

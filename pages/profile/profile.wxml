@@ -1,15 +1,41 @@
 <view class="container">
   <navigation-bar title="{{isAdmin ? '管理后台' : '我的'}}"></navigation-bar>
 
+  <!-- 蓝色头部区域 -->
   <view class="profile-header {{isAdmin ? 'admin-style' : ''}}" wx:if="{{userInfo}}">
-    <view class="avatar flex-center">
-      <text wx:if="{{!userInfo.avatar}}">{{isAdmin ? '🛡️' : '👤'}}</text>
-      <image wx:else src="{{userInfo.avatar}}" mode="aspectFill"></image>
+    <view class="ph-top flex">
+      <view class="avatar flex-center">
+        <text wx:if="{{!userInfo.avatar}}">👤</text>
+        <image wx:else src="{{userInfo.avatar}}" mode="aspectFill"></image>
+      </view>
+      <view class="flex-1">
+        <text class="nickname">{{userInfo.nickname}}</text>
+        <text class="account-id">会员号：CW{{10000 + userInfo.id}}</text>
+        <text class="role-tag" wx:if="{{isAdmin}}">管理员</text>
+      </view>
+      <view class="ph-edit" bindtap="goToEditProfile" wx:if="{{!isAdmin}}">
+        <text>编辑资料</text>
+      </view>
     </view>
-    <view class="flex-1">
-      <text class="nickname">{{userInfo.nickname}}</text>
-      <text class="role-tag" wx:if="{{isAdmin}}">管理员</text>
-      <text class="phone" wx:if="{{userInfo.phone}}">{{userInfo.phone}}</text>
+
+    <!-- 蓝色背景底部4个入口（管理员不显示） -->
+    <view class="ph-cards" wx:if="{{!isAdmin}}">
+      <view class="ph-card" bindtap="goToPackages">
+        <text class="phc-icon">📦</text>
+        <text class="phc-label">我的套餐</text>
+      </view>
+      <view class="ph-card" bindtap="goToPoints">
+        <text class="phc-icon">💰</text>
+        <text class="phc-label">我的积分</text>
+      </view>
+      <view class="ph-card" bindtap="goToTeam">
+        <text class="phc-icon">👥</text>
+        <text class="phc-label">我的团队</text>
+      </view>
+      <view class="ph-card" bindtap="goToCoupons">
+        <text class="phc-icon">🎫</text>
+        <text class="phc-label">优惠券</text>
+      </view>
     </view>
   </view>
 
@@ -36,66 +62,66 @@
 
     <view class="menu-section mt-24">
       <view class="menu-item flex-between" bindtap="goToAdminDashboard">
-        <view class="flex">
-          <text class="menu-icon">📊</text>
-          <text>订单处理面板</text>
-        </view>
+        <view class="flex"><text class="menu-icon">📊</text><text>订单处理面板</text></view>
         <text class="menu-arrow">></text>
       </view>
       <view class="menu-item flex-between" bindtap="goToAdminOrders">
-        <view class="flex">
-          <text class="menu-icon">🔍</text>
-          <text>全部订单检索</text>
-        </view>
+        <view class="flex"><text class="menu-icon">🔍</text><text>全部订单检索</text></view>
         <text class="menu-arrow">></text>
       </view>
     </view>
 
-    <view class="divider px-24">
-      <text class="divider-text">— 个人功能 —</text>
-    </view>
+    <view class="divider px-24"><text class="divider-text">— 个人功能 —</text></view>
   </view>
 
-  <!-- Regular User Section -->
-  <view class="stats-card card flex" wx:if="{{!isAdmin}}">
-    <view class="stat-item" bindtap="goToOrders">
-      <text class="stat-num">{{orderCounts.pending}}</text>
-      <text class="stat-label">待确认</text>
-    </view>
-    <view class="stat-item" bindtap="goToOrders">
-      <text class="stat-num">{{orderCounts.in_progress}}</text>
-      <text class="stat-label">进行中</text>
-    </view>
-  </view>
+  <!-- Regular User 菜单 -->
+  <view class="menu-section {{isAdmin ? '' : 'mt-24'}}">
 
-  <view class="menu-section">
+    <!-- 车辆卡片 -->
+    <view class="vehicle-card" bindtap="goToVehicles">
+      <view class="vc-left">
+        <text class="vc-title">我的爱车</text>
+        <text class="vc-desc" wx:if="{{myVehicle}}">{{myVehicle.plate_no}} {{myVehicle.brand}} {{myVehicle.model}}</text>
+        <text class="vc-desc vc-empty" wx:else>点击添加您的车辆信息</text>
+      </view>
+      <view class="vc-right">
+        <text class="vc-icon">🚗</text>
+        <text class="vc-arrow">查看 ></text>
+      </view>
+    </view>
+
     <view class="menu-item flex-between" bindtap="goToOrders">
-      <view class="flex">
-        <text class="menu-icon">📋</text>
-        <text>我的订单</text>
-      </view>
-      <text class="menu-arrow">></text>
-    </view>
-    <view class="menu-item flex-between" bindtap="goToVehicles">
-      <view class="flex">
-        <text class="menu-icon">🚗</text>
-        <text>车辆管理</text>
-      </view>
-      <text class="menu-arrow">></text>
-    </view>
-    <view class="menu-item flex-between" bindtap="goToCoupons">
-      <view class="flex">
-        <text class="menu-icon">🎫</text>
-        <text>优惠券</text>
-      </view>
+      <view class="flex"><text class="menu-icon">📋</text><text>我的订单</text></view>
       <text class="menu-arrow">></text>
     </view>
     <view class="menu-item flex-between" bindtap="goToSettings">
-      <view class="flex">
-        <text class="menu-icon">⚙️</text>
-        <text>设置</text>
-      </view>
+      <view class="flex"><text class="menu-icon">⚙️</text><text>设置</text></view>
       <text class="menu-arrow">></text>
+    </view>
+  </view>
+
+  <!-- 我的功能 -->
+  <view class="func-section">
+    <text class="func-title">我的功能</text>
+    <view class="func-grid">
+      <view class="func-item" bindtap="showTip" data-text="品牌入驻">
+        <text class="func-icon">🏷️</text><text class="func-label">品牌入驻</text>
+      </view>
+      <view class="func-item" bindtap="showTip" data-text="商家入驻">
+        <text class="func-icon">🏪</text><text class="func-label">商家入驻</text>
+      </view>
+      <view class="func-item" bindtap="showTip" data-text="投诉建议">
+        <text class="func-icon">📝</text><text class="func-label">投诉建议</text>
+      </view>
+      <view class="func-item" bindtap="showTip" data-text="邀请好友">
+        <text class="func-icon">📤</text><text class="func-label">邀请好友</text>
+      </view>
+      <view class="func-item" bindtap="goToMyReviews">
+        <text class="func-icon">⭐</text><text class="func-label">我的评价</text>
+      </view>
+      <view class="func-item" bindtap="contactService">
+        <text class="func-icon">🎧</text><text class="func-label">在线客服</text>
+      </view>
     </view>
   </view>
 
