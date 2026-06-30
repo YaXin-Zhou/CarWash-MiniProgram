@@ -5,7 +5,7 @@ createApp({
     return {
       token: localStorage.getItem('admin_token') || '',
       activeMenu: 'dashboard',
-      loginForm: { username: 'admin', password: 'admin' },
+      loginForm: { username: 'admin', password: 'admin123' },
       menus: [
         { key: 'dashboard', label: '仪表盘' },
         { key: 'orders', label: '订单管理' },
@@ -90,7 +90,7 @@ createApp({
         localStorage.setItem('admin_token', this.token);
         this.loadAll();
       } catch (e) {
-        alert('登录失败，请确保后端服务已启动');
+        alert(e.response?.data?.message || '登录失败，请确保后端服务已启动');
       }
     },
 
