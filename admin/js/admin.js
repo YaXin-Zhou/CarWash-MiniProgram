@@ -82,16 +82,12 @@ createApp({
     async login() {
       if (!this.loginForm.username || !this.loginForm.password) return alert('请输入账号密码');
       try {
-        const res = await axios.post(this.baseUrl + '/api/auth/login', {
-          code: 'admin_' + this.loginForm.password,
-          nickname: '管理员'
+        const res = await axios.post(this.baseUrl + '/api/auth/admin-login', {
+          username: this.loginForm.username,
+          password: this.loginForm.password
         });
         this.token = res.data.data.token;
         localStorage.setItem('admin_token', this.token);
-        // Update user role to admin in backend
-        await axios.put(this.baseUrl + '/api/admin/users/1/status', { status: 1 }, {
-          headers: { 'Authorization': 'Bearer ' + this.token }
-        });
         this.loadAll();
       } catch (e) {
         alert('登录失败，请确保后端服务已启动');
