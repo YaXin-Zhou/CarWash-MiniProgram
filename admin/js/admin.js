@@ -245,7 +245,12 @@ createApp({
   },
 
   mounted() {
-    if (this.token) this.loadAll();
+    if (this.token) {
+      this.get('/api/admin/dashboard').then(d => this.dashboard = d).catch(() => {
+        this.token = '';
+        localStorage.removeItem('admin_token');
+      });
+    }
   },
 
   watch: {
